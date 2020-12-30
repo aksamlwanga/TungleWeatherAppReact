@@ -17,7 +17,7 @@ export default function Home() {
     useEffect(() => {
         var sameDate = []
         setIsLoading(true)
-        fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + key + "&appid=ef9d4d5abe9ac79938327c660c3c3622")
+        fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + key + "&appid=ef9d4d5abe9ac79938327c660c3c3622")
             .then(res => res.json())
             .then(
                 (result) => {
