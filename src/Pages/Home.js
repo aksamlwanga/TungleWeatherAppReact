@@ -10,40 +10,51 @@ export default function Home() {
     const [sameData, setSameData] = useState([]);
     const [key, setKeyword] = useState(keyword.search)
     const [isloading, setIsLoading] = useState(false)
-    const [error, setError] = useState("")
+    const [error, setError] = useState()
+    const API_KEY = process.env.REACT_APP_API_KEY
 
-    console.log(keyword.search + "kdk")
 
     useEffect(() => {
         var sameDate = []
         setIsLoading(true)
-        fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + key + "&appid=ef9d4d5abe9ac79938327c660c3c3622")
+        fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + key + "&appid=" + API_KEY)
             .then(res => res.json())
             .then(
                 (result) => {
+                    if (result.cod==="404") {
+                        setError({
+                            error: "Apologies ,no data found for the search word " + key,
+                            message: "Check the words you have enter ,try entering Cities like Mexico ,Countries for good results "
+                        })
 
-                    setData(result)
-                    // eslint-disable-next-line array-callback-return
-                    result.list.map(item => {
-                        var x = new Date(item.dt_txt).toISOString().split('T')[0];
-                        if (sameDate.indexOf(x) === -1) {
-                            sameDate.push(x)
+                    } else {
+                        setData(result)
+                        // eslint-disable-next-line array-callback-return
+                        result.list.map(item => {
+                            var x = new Date(item.dt_txt).toISOString().split('T')[0];
+                            if (sameDate.indexOf(x) === -1) {
+                                sameDate.push(x)
 
-                        }
+                            }
 
-                    });
+                        })
+                        setSameData(sameDate)
+                    };
 
-                    setSameData(sameDate)
+
                     setIsLoading(false)
 
-                }, (error) => {
-                    if (error) {
-                        setError("Something Went Wrong... Failed to Fetch data")
-                        setIsLoading(false)
-                    }
-
                 })
-    }, [key])
+            .catch((error) => {
+                if (error) {
+                    setError({
+                        error: "Apologies ,we are unable to display the required details due to an error that has occured.Sorry for Such results And Try again Later.",
+                        message: "Check your Internet connection /Reload this page Or try Again letter"
+                    })
+                    setIsLoading(false)
+                }
+            })
+    }, [key, API_KEY])
     return (
         <>
             <Header setWord={setKeyword} />
@@ -51,10 +62,10 @@ export default function Home() {
                 {!error ? "" :
 
                     <MDBAlert color="warning">
-                        <h4 className="alert-heading">OOps <MDBIcon icon="exclamation-triangle" />!</h4>
-                        <p>Apologies ,we are unable to display the required details due to an error that has occured.Sorry for Such results And Try again Later.</p>
+                        <h4 className="alert-heading">Oops <MDBIcon icon="exclamation-triangle" /></h4>
+                        <p>{error.error}</p>
                         <hr />
-                        <p className="mb-0">Check your Internet connection /Reload this page Or try Again letter</p>
+                        <p className="mb-0">{error.message}</p>
                     </MDBAlert>
 
                 }

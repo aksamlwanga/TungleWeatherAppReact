@@ -21,6 +21,7 @@ class Header extends Component {
     handleNavbarClick = (event) => {
         event.preventDefault();
         // console.log(this.state.input)
+        if(this.state.input)
         keyword.search=this.state.input
         
         this.setState({
@@ -30,9 +31,11 @@ class Header extends Component {
     }
     handleChange=(event)=>{
         const { value } = event.currentTarget;
+        if(value){
         this.setState({
             input:value
         })
+    }
     }
 
     render() {
