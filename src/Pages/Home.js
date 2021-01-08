@@ -55,6 +55,9 @@ export default function Home() {
                 }
             })
     }, [key, API_KEY])
+const toDegree=(temp)=>{
+return ((temp− 273.15) × 9/5 + 32) 
+} 
     return (
         <>
             <Header setWord={setKeyword} />
@@ -122,10 +125,10 @@ export default function Home() {
 
                                                     <h6 className="mt-4 mb-3">
                                                         <span className="font-weight-bold" >
-                                                            {tempMaxAndMinDay.main.temp_max} &#8451;
+                                                            {toDegree(tempMaxAndMinDay.main.temp_max) } &#8451;
                                         </span>    &nbsp;
                                         <span className=" font-weight-bold grey-text" >
-                                                            {tempMaxAndMinDay.main.temp_min} &#8451;
+                                                            {toDegree(tempMaxAndMinDay.main.temp_min) } &#8451;
                                         </span>
                                                     </h6>
                                                     <MDBMask className="flex-center" overlay="grey-light"
