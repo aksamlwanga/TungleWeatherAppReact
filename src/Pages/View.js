@@ -2,6 +2,7 @@ import React from 'react'
 import { MDBRow, MDBCol, MDBCard, MDBView, MDBCardBody, MDBMask } from "mdbreact"
 import iconCodeMapping from '../WeatherIcon';
 import Header from '../Component/Header';
+import toDegree from '../Constants/Methods'
 // import {useParams} from 'react-router-dom'
 
 export default function View(props) {
@@ -33,17 +34,17 @@ export default function View(props) {
                                     <h5 className="font-weight-bold mt-4 mb-3">{getTime(item.dt_txt)}</h5>
                                     <img
                                         tag="img"
-                                        src={iconCodeMapping[item.weather[0].icon]}
+                                        src={iconCodeMapping[item.weather[0].icon] || iconCodeMapping["10n"]}
                                         className="mx-auto"
                                         alt="Sample avatar"
                                     />
 
                                     <h6 className="mt-4 mb-3">
                                         <span className="font-weight-bold" >
-                                            {item.main.temp_max} &#8451;
+                                            {toDegree(item.main.temp_max)} &#8451;
                                         </span>    &nbsp;
                                         <span className=" font-weight-bold grey-text" >
-                                            {item.main.temp_min} &#8451;
+                                            {toDegree(item.main.temp_min)} &#8451;
                                         </span>
                                     </h6>  <MDBMask className="flex-center" overlay="grey-light">
                                         <p className="white-text">

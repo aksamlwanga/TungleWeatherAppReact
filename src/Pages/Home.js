@@ -4,6 +4,8 @@ import iconCodeMapping from '../WeatherIcon';
 import { Link } from 'react-router-dom';
 import Header from '../Component/Header';
 import { keyword } from '../Component/Search';
+import toDegree from '../Constants/Methods'
+
 
 export default function Home() {
     const [data, setData] = useState({});
@@ -55,9 +57,7 @@ export default function Home() {
                 }
             })
     }, [key, API_KEY])
-const toDegree=(temp)=>{
-return ((temp− 273.15) × 9/5 + 32) 
-} 
+ 
     return (
         <>
             <Header setWord={setKeyword} />
